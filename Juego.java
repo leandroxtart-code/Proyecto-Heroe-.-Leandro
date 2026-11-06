@@ -29,46 +29,42 @@ public static void main(String[] args)
             teclado.nextLine();
 
             System.out.println("Que comience la Aventura...");
-
-            System.out.println();
-            System.out.println("--------------MENU PRINCIPAL--------------");
-            System.out.println("1. Nueva Partida");
-            System.out.println("2. Consultar Ranking");
-            System.out.println("3. Ayuda");
-            System.out.println("4. Salir del Juego");
-            System.out.println( "Elije una Opcion para Continuar:");
-
+            
             int menu;
+            
+        do
+        {
+            mostrarMenu();
+
+            
             menu = teclado.nextInt();
             switch (menu)
             {
                 case 1:
-                    System.out.println("Nueva Partida");
-                    System.out.println("Dime tu nombre Jugador");
-                    teclado.nextLine();
-                    String jugador = teclado.nextLine();
-                    while (jugador.isBlank())
-                    {
-                        System.out.println("Es necesario un nombre");
-                        System.out.println("Dime tu nombre Jugador");
-                        jugador = teclado.nextLine();
-                    }
-                    System.out.println("Introduce el nombre de tu Héroe:"); 
-                    String nombre = teclado.nextLine();
-
-                    while (nombre.isBlank())
-                    {
-                        System.out.println("El nombre no puede estar vacio");
-                        System.out.println("Introduce el nombre de tu Héroe");
-                        nombre = teclado.nextLine();
-                    }
-                    System.out.println("¡Bienvenido, " + jugador + "!");
-                    System.out.print("Tu héroe " + nombre + " está listo para defender las Almas"); 
+                    nuevaPartida(teclado);
                     break;
                 case 2:
-                    System.out.println(" Consultar Rankin");
+                    System.out.println(" Consultar Ranking");
+                    System.out.println("");
+                    System.out.println();
                     break;
                 case 3:
+                    mostrarAyuda();
+                break;
+                case 4:
+                    System.out.println(" Salir del Juego ");
+                    System.out.println("");
+                    System.out.println("Saliendo del Juego. ¡Hasta Pronto!");
+                    System.out.println("");
+                break;
+                default:
+                    System.out.println(" No es posible seguir");
+            }
+
+        } while (menu !=4);
+    }
+            public static void mostrarAyuda()
+            {
                     System.out.println(" Ayuda ");
                     System.out.println("");
                     System.out.println("---------AYUDA---------");
@@ -81,16 +77,46 @@ public static void main(String[] args)
                     System.out.println("· Consigues 100 puntos por cada enemigo derrotado");
                     System.out.println("· Al derrotar a tu enemigo recibiras una maximo de 3 pociones y de nuevo 100 de vida");
                     System.out.println("");
-                break;
-                case 4:
-                    System.out.println(" Salir del Juego ");
-                    System.out.println("");
-                    System.out.println("Saliendo del Juego. ¡Hasta Pronto!!");
-                    System.out.println("");
-                break;
-                default:
-                    System.out.println(" No es posible seguir");
             }
+            public static void mostrarMenu()
+            {
+                    System.out.println();
+                    System.out.println("--------------MENU PRINCIPAL--------------");
+                    System.out.println("1. Nueva Partida");
+                    System.out.println("2. Consultar Ranking");
+                    System.out.println("3. Ayuda");
+                    System.out.println("4. Salir del Juego");
+                    System.out.println( "Elije una Opcion para Continuar:");
+            }
+            public static void nuevaPartida(Scanner teclado)
+            {
+                    System.out.println("Nueva Partida");
+                        System.out.println("Dime tu nombre Jugador");
+                        teclado.nextLine();
+                        String jugador = teclado.nextLine();
+                        while (jugador.isBlank())
+                        {
+                            System.out.println("Es necesario un nombre");
+                            System.out.println("Dime tu nombre Jugador");
+                            jugador = teclado.nextLine();
+                        }
+                        System.out.println("Introduce el nombre de tu Héroe:"); 
+                        String nombre = teclado.nextLine();
 
-    }
+                        while (nombre.isBlank())
+                        {
+                            System.out.println("El nombre no puede estar vacio");
+                            System.out.println("Introduce el nombre de tu Héroe");
+                            nombre = teclado.nextLine();
+                        }
+                        System.out.println("¡Bienvenido, " + jugador + "!");
+                        System.out.print("Tu héroe " + nombre + " está listo para defender las Almas");
+                        int vida = 100;
+                        int pociones = 3;
+                        String [] nombresEnemigos = {"Goblin", "Orco", "Vesperos"};
+                        int[] vidaEnemigos = {40, 60, 80};
+
+                        for (int i = 0; i < nombresEnemigos.length; i++)
+                            
+            }
 }
