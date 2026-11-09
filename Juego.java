@@ -110,13 +110,59 @@ public static void main(String[] args)
                             nombre = teclado.nextLine();
                         }
                         System.out.println("¡Bienvenido, " + jugador + "!");
-                        System.out.print("Tu héroe " + nombre + " está listo para defender las Almas");
+                        System.out.println("Tu héroe " + nombre + " está listo para defender las Almas");
+                        System.out.println("");
                         int vida = 100;
                         int pociones = 3;
-                        String [] nombresEnemigos = {"Goblin", "Orco", "Vesperos"};
+                        String[] nombresEnemigos = {"Goblin", "Orco", "Vesperos"};
                         int[] vidaEnemigos = {40, 60, 80};
 
                         for (int i = 0; i < nombresEnemigos.length; i++)
-                            
+                            {
+                                String enemigo = nombresEnemigos[i];
+                                int vidaEnemigo = vidaEnemigos[i];
+                                System.out.println("Ha aparecido " + enemigo + " con " + vidaEnemigo + " puntos de vida.");
+
+                                while (vida > 0 && vidaEnemigo > 0)
+                                {
+                                    System.out.println("Tu vida: " + vida);
+                                    System.out.println("La vida del enemigo es de " + vidaEnemigo);
+                                    System.out.println("");
+                                    System.out.println("1. atacar");
+                                    int accion = teclado.nextInt();
+                                    
+                                    switch (accion)
+                                    {
+                                         case 1:
+                                        int danio = (int) (Math.random() * 11) + 10;
+                                        vidaEnemigo = vidaEnemigo - danio;
+                                        System.out.println("Has atacado al enemigo y le has hecho " + danio + " puntos de daño.");
+                                        System.out.println("");
+                                        break;
+                                        default:
+                                            System.out.println("Esa opción no es válida.");
+                                    }
+                                
+                                    if (vidaEnemigo > 0)
+                                    {
+                                        int danioEnemigo = (int) (Math.random() * 11) + 5;
+                                        vida = vida - danioEnemigo;
+                                        System.out.println("El enemigo te ha atacado y te ha hecho " + danioEnemigo + " puntos de daño.");
+                                        System.out.println("");
+                                    }   
+                                }
+                                    if (vida <= 0)
+                                    {
+                                        System.out.println("Has sido derrotado por " + enemigo + ". ¡Buen Intento!");
+                                        System.out.println("");
+                                        break;
+                                    }
+                                    else
+                                    {
+                                        System.out.println("Has derrotado a " + enemigo + " y has ganado 100 puntos.");
+                                        System.out.println("");
+                                    }
+                            }
+
             }
 }
