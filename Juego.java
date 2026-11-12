@@ -122,6 +122,7 @@ public static void main(String[] args)
                         int puntos = 0;
                         String[] nombresEnemigos = {"Goblin", "Orco", "Vesperos"};
                         int[] vidaEnemigos = {40, 60, 80};
+                        boolean abandonar = false; 
 
                         for (int i = 0; i < nombresEnemigos.length; i++)
                             {
@@ -129,7 +130,7 @@ public static void main(String[] args)
                                 int vidaEnemigo = vidaEnemigos[i];
                                 System.out.println("Ha aparecido " + enemigo + " con " + vidaEnemigo + " puntos de vida.");
 
-                                while (vida > 0 && vidaEnemigo > 0)
+                                while (vida > 0 && vidaEnemigo > 0 && !abandonar)
                                     
                                 {
                                     boolean turnoConsumido = false;
@@ -151,6 +152,10 @@ public static void main(String[] args)
                                         System.out.println("");
                                         turnoConsumido = true;
                                         break;
+                                         case 4: 
+                                        System.out.println("Has abandonado, pero no te preocupes que lo venceras en otra ocasion");
+                                        abandonar = true;
+                                        break;
                                         default:
                                             System.out.println("Esa opción no es válida.");
                                     }
@@ -162,8 +167,13 @@ public static void main(String[] args)
                                         System.out.println("El " + enemigo + " te ha atacado y te ha hecho " + danioEnemigo + " puntos de daño.");
                                         System.out.println("");
                                     }   
-                                }
-                                    if (vida <= 0)
+                                }   
+                                    if (abandonar)
+                                    {
+                                        System.out.println("Preparate mejor para otra oportunidad!!");
+                                        break;
+                                    }
+                                    else if (vida <= 0)
                                     {
                                         System.out.println("Has sido derrotado por " + enemigo + ". ¡Buen Intento!");
                                         System.out.println("");
