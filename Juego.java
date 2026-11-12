@@ -1,7 +1,12 @@
 import java.util.Scanner;
 public class Juego
 {
+
+static final int VIDA_MAXIMA = 100;
+static final int POCIONES_INICIALES = 3;
+static final int CURACION_POCION = 25;
 public static void main(String[] args)
+
     {
         Scanner teclado = new Scanner(System.in);
 
@@ -112,8 +117,9 @@ public static void main(String[] args)
                         System.out.println("¡Bienvenido, " + jugador + "!");
                         System.out.println("Tu héroe " + nombre + " está listo para defender las Almas");
                         System.out.println("");
-                        int vida = 100;
-                        int pociones = 3;
+                        int vida = VIDA_MAXIMA;
+                        int pociones = POCIONES_INICIALES;
+                        int puntos = 0;
                         String[] nombresEnemigos = {"Goblin", "Orco", "Vesperos"};
                         int[] vidaEnemigos = {40, 60, 80};
 
@@ -124,11 +130,16 @@ public static void main(String[] args)
                                 System.out.println("Ha aparecido " + enemigo + " con " + vidaEnemigo + " puntos de vida.");
 
                                 while (vida > 0 && vidaEnemigo > 0)
+                                    
                                 {
+                                    boolean turnoConsumido = false;
                                     System.out.println("Tu vida: " + vida);
                                     System.out.println("La vida del enemigo es de " + vidaEnemigo);
                                     System.out.println("");
                                     System.out.println("1. atacar");
+                                    System.out.println("2. Curarse");
+                                    System.out.println("3. Inventario");
+                                    System.out.println("4. Abandonar");
                                     int accion = teclado.nextInt();
                                     
                                     switch (accion)
@@ -138,16 +149,17 @@ public static void main(String[] args)
                                         vidaEnemigo = vidaEnemigo - danio;
                                         System.out.println("Has atacado al enemigo y le has hecho " + danio + " puntos de daño.");
                                         System.out.println("");
+                                        turnoConsumido = true;
                                         break;
                                         default:
                                             System.out.println("Esa opción no es válida.");
                                     }
                                 
-                                    if (vidaEnemigo > 0)
+                                    if (turnoConsumido && vidaEnemigo > 0)
                                     {
                                         int danioEnemigo = (int) (Math.random() * 11) + 5;
                                         vida = vida - danioEnemigo;
-                                        System.out.println("El enemigo te ha atacado y te ha hecho " + danioEnemigo + " puntos de daño.");
+                                        System.out.println("El " + enemigo + " te ha atacado y te ha hecho " + danioEnemigo + " puntos de daño.");
                                         System.out.println("");
                                     }   
                                 }
@@ -161,6 +173,8 @@ public static void main(String[] args)
                                     {
                                         System.out.println("Has derrotado a " + enemigo + " y has ganado 100 puntos.");
                                         System.out.println("");
+                                        puntos = puntos + 100;
+                                        System.out.println("Has conseguido " + 100 + " puntos");
                                     }
                             }
 
