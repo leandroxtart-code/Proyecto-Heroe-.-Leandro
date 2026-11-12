@@ -170,7 +170,7 @@ public static void main(String[] args)
                                 }   
                                     if (abandonar)
                                     {
-                                        System.out.println("Preparate mejor para otra oportunidad!!");  
+                                        System.out.println("Preparate mejor para otra oportunidad!!");
                                         break;
                                     }
                                     else if (vida <= 0)
