@@ -41,7 +41,6 @@ public static void main(String[] args)
         {
             mostrarMenu();
 
-            
             menu = teclado.nextInt();
             switch (menu)
             {
@@ -93,6 +92,38 @@ public static void main(String[] args)
                     System.out.println("4. Salir del Juego");
                     System.out.println( "Elije una Opcion para Continuar:");
             }
+            public static void mostrarInventario(int[] inventario, int pocionesDisponibles)
+            {
+                System.out.println("Tienes " + pocionesDisponibles + " pociones");
+                for (int i = 0; i < pocionesDisponibles; i++)
+                {
+                    System.out.println("Poción " + (i + 1) + ": cura " + inventario[i]);
+                }
+            }
+            public static int usarPocion(int vida, int[] inventario, int pocionesDisponibles)
+            {
+                if(pocionesDisponibles == 0)
+                {
+                    System.out.println("No te quedan más pociones");
+                    return vida;
+                }
+                else if (vida == VIDA_MAXIMA)
+                {
+                    System.out.println("Tu vida ya está completa");
+                    return vida;
+                }
+                else
+                {
+                    inventario[pocionesDisponibles - 1] = 0;
+                    int vidaNueva = vida + CURACION_POCION;
+                    if (vidaNueva > VIDA_MAXIMA);   
+                    {
+                        vidaNueva = VIDA_MAXIMA;
+                    }
+                    System.out.println("Tu vida ahora es de " + vidaNueva);          
+                    return vidaNueva;
+                }
+            }
             public static void nuevaPartida(Scanner teclado)
             {
                     System.out.println("Nueva Partida");
@@ -118,11 +149,17 @@ public static void main(String[] args)
                         System.out.println("Tu héroe " + nombre + " está listo para defender las Almas");
                         System.out.println("");
                         int vida = VIDA_MAXIMA;
-                        int pociones = POCIONES_INICIALES;
+                        int[] inventario = new int [POCIONES_INICIALES];
+
+                        for (int i = 0; i < inventario.length; i++)
+                        {
+                            inventario[i] = CURACION_POCION;
+                        }
+                        int pocionesDisponibles = inventario.length;
                         int puntos = 0;
                         String[] nombresEnemigos = {"Goblin", "Orco", "Vesperos"};
                         int[] vidaEnemigos = {40, 60, 80};
-                        boolean abandonar = false; 
+                        boolean abandonar = false;
 
                         for (int i = 0; i < nombresEnemigos.length; i++)
                             {
@@ -152,6 +189,20 @@ public static void main(String[] args)
                                         System.out.println("");
                                         turnoConsumido = true;
                                         break;
+                                         case 2:
+                                            int vidaJugador = vida;
+                                            vida = usarPocion(vida, inventario, pocionesDisponibles);
+                                            
+                                            if (vida > vidaJugador) 
+                                            {
+                                                System.out.println("Has recuperado " + (vida - vidaJugador) + " de vida");
+                                                pocionesDisponibles--;
+                                                turnoConsumido = true;
+                                            }
+                                            break;
+                                         case 3: 
+                                        mostrarInventario(inventario, pocionesDisponibles);
+                                         break;
                                          case 4: 
                                         System.out.println("Has abandonado, pero no te preocupes que lo venceras en otra ocasion");
                                         abandonar = true;
