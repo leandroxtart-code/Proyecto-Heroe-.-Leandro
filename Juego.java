@@ -1,4 +1,10 @@
 import java.util.Scanner;
+import java.io.File;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
 public class Juego
 {
 
@@ -37,11 +43,17 @@ public static void main(String[] args)
             
             int menu;
             
-        do
+            String[] nombresRanking = new String[10];
+            int[] puntosRanking = new int[10];
+            int[] contadorRanking = {0};
+        
+            cargarRanking(nombresRanking, puntosRanking, contadorRanking);
+
+            do
         {
             mostrarMenu();
-
             
+
             menu = teclado.nextInt();
             switch (menu)
             {
@@ -49,9 +61,7 @@ public static void main(String[] args)
                     nuevaPartida(teclado);
                     break;
                 case 2:
-                    System.out.println(" Consultar Ranking");
-                    System.out.println("");
-                    System.out.println();
+                    mostrarRanking(nombresRanking, puntosRanking, contadorRanking[0]);
                     break;
                 case 3:
                     mostrarAyuda();
@@ -68,6 +78,32 @@ public static void main(String[] args)
 
         } while (menu !=4);
     }
+            public static void mostrarMenu()
+            {
+                    System.out.println();
+                    System.out.println("--------------MENU PRINCIPAL--------------");
+                    System.out.println("1. Nueva Partida");
+                    System.out.println("2. Consultar Ranking");
+                    System.out.println("3. Ayuda");
+                    System.out.println("4. Salir del Juego");
+                    System.out.println( "Elije una Opcion para Continuar:");
+            }
+            public static void mostrarRanking(String[] nombres, int[] puntos, int contador)
+            {
+                System.out.println("---RANKING JUGADORES Y HEROES---");
+                if (contador == 0)
+                {
+                    System.out.println("Todavía no hay registros disponibles");
+                }
+                else
+                {
+                    for (int i = 0; i < contador; i++)
+                    {
+                        System.out.println((i + 1) + ". " + nombres[i] + " - " + puntos[i] + " puntos");
+                    }
+                }
+                System.out.println("-------------------");
+            }
             public static void mostrarAyuda()
             {
                     System.out.println(" Ayuda ");
@@ -83,15 +119,44 @@ public static void main(String[] args)
                     System.out.println("· Al derrotar a tu enemigo recibiras una maximo de 3 pociones y de nuevo 100 de vida");
                     System.out.println("");
             }
-            public static void mostrarMenu()
+            
+            public static void cargarRanking(String[] nombres, int[] puntos, int[] contador)
             {
-                    System.out.println();
-                    System.out.println("--------------MENU PRINCIPAL--------------");
-                    System.out.println("1. Nueva Partida");
-                    System.out.println("2. Consultar Ranking");
-                    System.out.println("3. Ayuda");
-                    System.out.println("4. Salir del Juego");
-                    System.out.println( "Elije una Opcion para Continuar:");
+                try
+                {
+                    File archivo = new File("ranking.xml");
+                    if (!archivo.exists()) 
+                {  
+                    System.out.println("El archivo ranking.xml no existe aún");
+                    return;
+                }
+                            DocumentBuilderFactory fabrica = DocumentBuilderFactory.newInstance();
+                    fabrica.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+                    DocumentBuilder constructor = fabrica.newDocumentBuilder();
+                    Document documento = constructor.parse(archivo);
+
+                    NodeList lista = documento.getElementsByTagName("partida");
+                    
+                    // Reiniciamos el contador
+                    contador[0] = 0;
+
+                    for (int i = 0; i < lista.getLength() && i < 10; i++) 
+                    {
+                        org.w3c.dom.Element partida = (org.w3c.dom.Element) lista.item(i);
+
+                        String nom = partida.getElementsByTagName("nombre").item(0).getTextContent();
+                        int pts = Integer.parseInt(partida.getElementsByTagName("puntos").item(0).getTextContent());
+
+                        nombres[contador[0]] = nom;
+                        puntos[contador[0]] = pts;
+                        contador[0]++;
+                    }
+                    System.out.println("¡Ranking cargado con éxito desde el XML!");
+
+                } catch (Exception e) 
+                {
+                    System.out.println("Error al cargar el ranking XML: " + e.getMessage());
+                }
             }
             public static void nuevaPartida(Scanner teclado)
             {

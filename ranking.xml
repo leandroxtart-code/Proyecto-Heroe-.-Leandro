@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ranking>
+    <partida id="1">
+        <nombre>Carlos</nombre>
+        <puntos>300</puntos>
+    </partida>
+    <partida id="2">
+        <nombre>Lucía</nombre>
+        <puntos>200</puntos>
+    </partida>
+    <partida id="3">
+        <nombre>Marcos</nombre>
+        <puntos>200</puntos>
+    </partida>
+    <partida id="4">
+        <nombre>Sofía</nombre>
+        <puntos>100</puntos>
+    </partida>
+    <partida id="5">
+        <nombre>Pedro</nombre>
+        <puntos>100</puntos>
+    </partida>
+</ranking>
