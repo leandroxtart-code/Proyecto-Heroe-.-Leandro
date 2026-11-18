@@ -99,7 +99,9 @@ public static void main(String[] args)
                 }
                 else
                 {
-                    for (int i = 0; i < contador - 1; i++)
+                    int limite = Math.min(contador, puntos.length);
+
+                    for (int i = 0; i < limite; i++)
                     {
                         System.out.println((i + 1) + ". " + nombres[i] + " - " + heroe[i] + " - " + puntos[i] + " puntos");
                     }
@@ -129,37 +131,90 @@ public static void main(String[] args)
                     File archivo = new File("ranking.xml");
                     if (!archivo.exists()) 
                 {  
-                    System.out.println("El archivo ranking.xml no existe aún");
+                    contador[0] = 0;
                     return;
                 }
-                            DocumentBuilderFactory fabrica = DocumentBuilderFactory.newInstance();
+                    DocumentBuilderFactory fabrica = DocumentBuilderFactory.newInstance();
                     fabrica.setFeature("http://apache.org/xml/features/disallow-doctype-decl", false);
                     DocumentBuilder constructor = fabrica.newDocumentBuilder();
                     Document documento = constructor.parse(archivo);
 
                     NodeList lista = documento.getElementsByTagName("partida");
+                    int totalPartidas = lista.getLength();
                     
-                    contador[0] = 0;
-
-                    for (int i = 0; i < lista.getLength() && i < 10; i++) 
-                    {
-                        org.w3c.dom.Element partida = (org.w3c.dom.Element) lista.item(i);
-
-                        String nom = partida.getElementsByTagName("nombre").item(0).getTextContent();
-                        String her = partida.getElementsByTagName("heroe").item(0).getTextContent();
-                        int pts = Integer.parseInt(partida.getElementsByTagName("puntos").item(0).getTextContent());
-
-                        nombres[contador[0]] = nom;
-                        heroe[contador[0]] = her;
-                        puntos[contador[0]] = pts;
-                        contador[0]++;
-                    }
-                    System.out.println("¡Ranking cargado con éxito desde el XML!");
-
-                } catch (Exception e) 
+                    if(totalPartidas == 0)
                 {
-                    System.out.println("Error al cargar el ranking XML: " + e.getMessage());
+                    contador[0] = 0;
+                    return; 
                 }
+                    String[] tempNombres = new String[totalPartidas];
+                    String[] tempHeroes = new String[totalPartidas];
+                    int[] tempPuntos = new int[totalPartidas];
+                    int validas = 0;
+
+                    for (int i = 0; i < totalPartidas; i++) 
+                    {
+                        try
+                        {
+                            org.w3c.dom.Element partida = (org.w3c.dom.Element) lista.item(i);
+                            
+                            NodeList nList = partida.getElementsByTagName("nombre");
+                            NodeList hList = partida.getElementsByTagName("heroe");
+                            NodeList pList = partida.getElementsByTagName("puntos");  
+
+                            if(nList.getLength() > 0 && hList.getLength() > 0 && pList.getLength() > 0)
+                            {
+                                tempNombres[validas] = nList.item(0).getTextContent();
+                                tempHeroes[validas] = hList.item(0).getTextContent();
+                                tempPuntos[validas] = Integer.parseInt(pList.item(0).getTextContent());
+                                validas++;
+                            }
+                        } catch (Exception ex){}
+                        
+                    }
+                    if (validas == 0) 
+                    {
+                        contador[0] = 0;
+                        return;
+                    }
+
+                    for (int i = 0; i < validas - 1; i++)
+                    {
+                        for (int j = 0; j < validas - 1 - i; j++)
+                        {
+                            if (tempPuntos[j] < tempPuntos[j + 1])
+                            {
+                                int auxPuntos = tempPuntos[j];
+                                tempPuntos[j] = tempPuntos[j + 1];
+                                tempPuntos[j + 1] = auxPuntos;
+
+                                String auxNombre = tempNombres[j];
+                                tempNombres[j] = tempNombres[j + 1];
+                                tempNombres[j + 1] = auxNombre;
+
+                                String auxHeroe = tempHeroes[j];
+                                tempHeroes[j] = tempHeroes[j + 1];
+                                tempHeroes[j + 1] = auxHeroe;
+                            }
+                        }
+                    }
+                    
+                    int cuantosCopia = Math.min(10, validas);
+                    for (int i = 0; i < cuantosCopia; i++)
+                    {
+                        nombres[i] = tempNombres[i];
+                        heroe[i] = tempHeroes[i];
+                        puntos[i] = tempPuntos[i];
+                    }   
+                    contador[0] = cuantosCopia;
+                    
+                    System.out.println("¡Ranking cargado con éxito desde el XML!");
+                }
+                catch (Exception e) 
+                {
+                    System.out.println("Aviso: El ranking se inicializara limpio.");
+                    contador[0] = 0;
+                }    
             }
             
             public static void guardarRanking(String jugador, String heroe, int puntos) 
