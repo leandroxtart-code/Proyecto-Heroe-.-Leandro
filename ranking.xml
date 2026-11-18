@@ -1,23 +1,182 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <ranking>
-    <partida id="1">
+                    
+    
+    
+    
+    <partida>
+                                        
+        
+        
+        
         <nombre>Carlos</nombre>
+                                        
+        
+        
+        
+        <heroe>Vengador</heroe>
+                                        
+        
+        
+        
         <puntos>300</puntos>
+                                    
+    
+    
+    
     </partida>
-    <partida id="2">
+                    
+    
+    
+    
+    <partida>
+                                        
+        
+        
+        
         <nombre>Lucía</nombre>
+                                        
+        
+        
+        
+        <heroe>Spiderman</heroe>
+                                        
+        
+        
+        
         <puntos>200</puntos>
+                                    
+    
+    
+    
     </partida>
-    <partida id="3">
+                    
+    
+    
+    
+    <partida>
+                                        
+        
+        
+        
         <nombre>Marcos</nombre>
+                                        
+        
+        
+        
+        <heroe>GhostFace</heroe>
+                                        
+        
+        
+        
         <puntos>200</puntos>
+                                    
+    
+    
+    
     </partida>
-    <partida id="4">
+                    
+    
+    
+    
+    <partida>
+                                        
+        
+        
+        
         <nombre>Sofía</nombre>
+                                        
+        
+        
+        
+        <heroe>Messi</heroe>
+                                        
+        
+        
+        
         <puntos>100</puntos>
+                                    
+    
+    
+    
     </partida>
-    <partida id="5">
+                    
+    
+    
+    
+    <partida>
+                                        
+        
+        
+        
         <nombre>Pedro</nombre>
+                                        
+        
+        
+        
+        <heroe>Sanchez</heroe>
+                                        
+        
+        
+        
         <puntos>100</puntos>
+                                    
+    
+    
+    
+    </partida>
+                
+    
+    
+    
+    <partida>
+                                
+        
+        
+        <nombre>1</nombre>
+                                
+        
+        
+        <heroe>Panchi</heroe>
+                                
+        
+        
+        <puntos>314</puntos>
+                            
+    
+    
+    </partida>
+            
+    
+    
+    <partida>
+                        
+        
+        <nombre>1</nombre>
+                        
+        
+        <heroe>1</heroe>
+                        
+        
+        <puntos>100</puntos>
+                    
+    
+    </partida>
+        
+    
+    <partida>
+                
+        <nombre>Lean</nombre>
+                
+        <heroe>Argen</heroe>
+                
+        <puntos>317</puntos>
+            
+    </partida>
+    
+    <partida>
+        <nombre>Lean</nombre>
+        <heroe>Fow</heroe>
+        <puntos>333</puntos>
     </partida>
 </ranking>

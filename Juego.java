@@ -44,10 +44,11 @@ public static void main(String[] args)
             int menu;
             
             String[] nombresRanking = new String[10];
+            String[] heroesRanking = new String[10];
             int[] puntosRanking = new int[10];
             int[] contadorRanking = {0};
         
-            cargarRanking(nombresRanking, puntosRanking, contadorRanking);
+            cargarRanking(nombresRanking, heroesRanking, puntosRanking, contadorRanking);
 
             do
         {
@@ -59,9 +60,10 @@ public static void main(String[] args)
             {
                 case 1:
                     nuevaPartida(teclado);
+                    cargarRanking(nombresRanking, heroesRanking, puntosRanking, contadorRanking);
                     break;
                 case 2:
-                    mostrarRanking(nombresRanking, puntosRanking, contadorRanking[0]);
+                    mostrarRanking(nombresRanking, heroesRanking, puntosRanking, contadorRanking[0]);
                     break;
                 case 3:
                     mostrarAyuda();
@@ -88,18 +90,18 @@ public static void main(String[] args)
                     System.out.println("4. Salir del Juego");
                     System.out.println( "Elije una Opcion para Continuar:");
             }
-            public static void mostrarRanking(String[] nombres, int[] puntos, int contador)
+            public static void mostrarRanking(String[] nombres, String[] heroe, int[] puntos, int contador)
             {
-                System.out.println("---RANKING JUGADORES Y HEROES---");
+                System.out.println("---RANKING JUGADORES, HEROES y PUNTOS---");
                 if (contador == 0)
                 {
                     System.out.println("Todavía no hay registros disponibles");
                 }
                 else
                 {
-                    for (int i = 0; i < contador; i++)
+                    for (int i = 0; i < contador - 1; i++)
                     {
-                        System.out.println((i + 1) + ". " + nombres[i] + " - " + puntos[i] + " puntos");
+                        System.out.println((i + 1) + ". " + nombres[i] + " - " + heroe[i] + " - " + puntos[i] + " puntos");
                     }
                 }
                 System.out.println("-------------------");
@@ -120,7 +122,7 @@ public static void main(String[] args)
                     System.out.println("");
             }
             
-            public static void cargarRanking(String[] nombres, int[] puntos, int[] contador)
+            public static void cargarRanking(String[] nombres, String[] heroe, int[] puntos, int[] contador)
             {
                 try
                 {
@@ -131,13 +133,12 @@ public static void main(String[] args)
                     return;
                 }
                             DocumentBuilderFactory fabrica = DocumentBuilderFactory.newInstance();
-                    fabrica.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+                    fabrica.setFeature("http://apache.org/xml/features/disallow-doctype-decl", false);
                     DocumentBuilder constructor = fabrica.newDocumentBuilder();
                     Document documento = constructor.parse(archivo);
 
                     NodeList lista = documento.getElementsByTagName("partida");
                     
-                    // Reiniciamos el contador
                     contador[0] = 0;
 
                     for (int i = 0; i < lista.getLength() && i < 10; i++) 
@@ -145,9 +146,11 @@ public static void main(String[] args)
                         org.w3c.dom.Element partida = (org.w3c.dom.Element) lista.item(i);
 
                         String nom = partida.getElementsByTagName("nombre").item(0).getTextContent();
+                        String her = partida.getElementsByTagName("heroe").item(0).getTextContent();
                         int pts = Integer.parseInt(partida.getElementsByTagName("puntos").item(0).getTextContent());
 
                         nombres[contador[0]] = nom;
+                        heroe[contador[0]] = her;
                         puntos[contador[0]] = pts;
                         contador[0]++;
                     }
@@ -156,6 +159,92 @@ public static void main(String[] args)
                 } catch (Exception e) 
                 {
                     System.out.println("Error al cargar el ranking XML: " + e.getMessage());
+                }
+            }
+            
+            public static void guardarRanking(String jugador, String heroe, int puntos) 
+            {
+                try
+                {
+                    File archivo = new File("ranking.xml");
+                    DocumentBuilderFactory fabrica = DocumentBuilderFactory.newInstance();
+                    fabrica.setFeature("http://apache.org/xml/features/disallow-doctype-decl", false);
+                    DocumentBuilder constructor = fabrica.newDocumentBuilder();
+                    Document documento;
+
+                    if(archivo.exists())
+                    {
+                        documento = constructor.parse(archivo);
+                    }
+                    else
+                    {
+                        documento = constructor.newDocument();
+                        Element raiz = documento.createElement("ranking");
+                        documento.appendChild(raiz);
+                    }
+                    Element raiz = documento.getDocumentElement();
+
+                    Element nuevaPartida = documento.createElement("partida");
+
+                    Element nodoJugador = documento.createElement("nombre");
+                    nodoJugador.setTextContent(jugador);
+                    nuevaPartida.appendChild(nodoJugador);
+                    
+                    Element nodoHeroe = documento.createElement("heroe");
+                    nodoHeroe.setTextContent(heroe);
+                    nuevaPartida.appendChild(nodoHeroe);
+
+                    Element nodoPuntos = documento.createElement("puntos");
+                    nodoPuntos.setTextContent(String.valueOf(puntos));
+                    nuevaPartida.appendChild(nodoPuntos);
+
+                    raiz.appendChild(nuevaPartida);
+
+                    javax.xml.transform.TransformerFactory transformerFactory = javax.xml.transform.TransformerFactory.newInstance();
+                    javax.xml.transform.Transformer transformer = transformerFactory.newTransformer();
+                    transformer.setOutputProperty(javax.xml.transform.OutputKeys.INDENT, "yes");
+                    javax.xml.transform.dom.DOMSource source = new javax.xml.transform.dom.DOMSource(documento);
+                    javax.xml.transform.stream.StreamResult result = new javax.xml.transform.stream.StreamResult(archivo);
+                    transformer.transform(source, result);
+
+                    System.out.println("¡Partida Guardada en el ranking correctamente!");
+                }
+                    catch (Exception e)
+                    {
+                        System.out.println("Error al guardar el ranking" + e.getMessage());
+                    }
+            }
+
+            public static int usarPocion(int vida, int[] inventario, int pocionesDisponibles)
+            {
+                if(pocionesDisponibles == 0)
+                {
+                    System.out.println("No te quedan más pociones");
+                    return vida;
+                }
+                else if (vida == VIDA_MAXIMA)
+                {
+                    System.out.println("Tu vida ya está completa");
+                    return vida;
+                }
+                else
+                {
+                    inventario[pocionesDisponibles - 1] = 0;
+                    int vidaNueva = vida + CURACION_POCION;
+                    if (vidaNueva > VIDA_MAXIMA) 
+                    {
+                        vidaNueva = VIDA_MAXIMA;
+                    }
+                    System.out.println("Tu vida ahora es de " + vidaNueva);          
+                    return vidaNueva;
+                }
+            }
+                public static void mostrarInventario(int[] inventario, int pocionesDisponibles)
+            {
+                System.out.println("Tienes " + pocionesDisponibles + " pociones");
+                for (int i = 0; i < pocionesDisponibles; i++)
+                {
+                    System.out.println("Poción " + (i + 1) + ": cura " + inventario[i]);
                 }
             }
             public static void nuevaPartida(Scanner teclado)
@@ -183,12 +272,12 @@ public static void main(String[] args)
                         System.out.println("Tu héroe " + nombre + " está listo para defender las Almas");
                         System.out.println("");
                         int vida = VIDA_MAXIMA;
-                        int pociones = POCIONES_INICIALES;
+                        int pocionesDisponibles = POCIONES_INICIALES;
                         int puntos = 0;
                         String[] nombresEnemigos = {"Goblin", "Orco", "Vesperos"};
                         int[] vidaEnemigos = {40, 60, 80};
-                        boolean abandonar = false; 
-
+                        boolean abandonar = false;
+                        int[] inventario = {25, 25, 25};
                         for (int i = 0; i < nombresEnemigos.length; i++)
                             {
                                 String enemigo = nombresEnemigos[i];
@@ -217,6 +306,21 @@ public static void main(String[] args)
                                         System.out.println("");
                                         turnoConsumido = true;
                                         break;
+                                         case 2:
+                                            System.out.println("");
+                                            int vidaJugador = vida;
+                                            vida = usarPocion(vida, inventario, pocionesDisponibles);
+                                            
+                                            if (vida > vidaJugador) 
+                                            {
+                                                System.out.println("Has recuperado " + (vida - vidaJugador) + " de vida");
+                                                pocionesDisponibles--;
+                                                turnoConsumido = true;
+                                            }
+                                            break;
+                                         case 3: 
+                                         mostrarInventario(inventario, pocionesDisponibles);
+                                         break;
                                          case 4: 
                                         System.out.println("Has abandonado, pero no te preocupes que lo venceras en otra ocasion");
                                         abandonar = true;
@@ -252,6 +356,16 @@ public static void main(String[] args)
                                         System.out.println("Has conseguido " + 100 + " puntos");
                                     }
                             }
+                            
+                        if (!abandonar && vida > 0)
+                        {
+                            puntos = puntos + vida;
+                            System.out.println("¡Has completado el juego! Bonificación de vida restante: " + vida + " puntos");
+                        }
 
+                        System.out.println("Puntuación total conseguida: " + puntos + " puntos");
+                        guardarRanking(jugador, nombre, puntos);
+                            
             }
 }
+            
