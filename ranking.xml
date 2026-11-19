@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<ranking>
+        
+    <partida>
+             
+        
+        <nombre>Carlos</nombre>
+                
+        <heroe>Vengador</heroe>
+                
+        <puntos>300</puntos>
+            
+    </partida>
+    
+    <partida>
+        <nombre>Lean</nombre>
+        <heroe>Panchi</heroe>
+        <puntos>344</puntos>
+    </partida>
+</ranking>
