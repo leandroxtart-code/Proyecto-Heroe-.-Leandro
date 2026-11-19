@@ -302,6 +302,14 @@ public static void main(String[] args)
                 }
             }
             
+            public static int ataqueHeroe(int vidaEnemigo)
+            {
+                int danio = (int) (Math.random() * 11) + 10;
+                System.out.println("Has atacado al enemigo y le has hecho " + danio + " puntos de daño.");
+                System.out.println("");
+                return vidaEnemigo - danio;
+            }
+
             public static void mostrarMenuCombate(int vida, int vidaEnemigo)
             {
                 System.out.println("Tu vida: " + vida);
@@ -363,10 +371,7 @@ public static void main(String[] args)
                                     switch (accion)
                                     {
                                          case 1:
-                                        int danio = (int) (Math.random() * 11) + 10;
-                                        vidaEnemigo = vidaEnemigo - danio;
-                                        System.out.println("Has atacado al enemigo y le has hecho " + danio + " puntos de daño.");
-                                        System.out.println("");
+                                        vidaEnemigo = ataqueHeroe(vidaEnemigo);
                                         turnoConsumido = true;
                                         break;
                                          case 2:
