@@ -306,7 +306,7 @@ public static void main(String[] args)
             {
                 System.out.println("");
                 int vidaNueva = usarPocion(vida, inventario, pocionesDisponibles);
-                if (vidaNueva > vida);
+                if (vidaNueva > vida)
                 {
                     System.out.println("Has recuperado " + (vidaNueva - vida) + " de vida");
                 }
