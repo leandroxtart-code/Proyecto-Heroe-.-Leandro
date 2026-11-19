@@ -302,6 +302,17 @@ public static void main(String[] args)
                 }
             }
             
+            public static void mostrarMenuCombate(int vida, int vidaEnemigo)
+            {
+                System.out.println("Tu vida: " + vida);
+                System.out.println("La vida del enemigo es de " + vidaEnemigo);
+                System.out.println("");
+                System.out.println("1. atacar");
+                System.out.println("2. Curarse");
+                System.out.println("3. Inventario");
+                System.out.println("4. Abandonar");
+            }
+
             public static String pedirTexto(Scanner teclado, String pregunta, String error)
             {
                 System.out.println(pregunta);
@@ -314,6 +325,7 @@ public static void main(String[] args)
                 }
                 return texto;
             }
+            
             public static void nuevaPartida(Scanner teclado)
             {
                     System.out.println("Nueva Partida");
@@ -345,13 +357,7 @@ public static void main(String[] args)
                                     
                                 {
                                     boolean turnoConsumido = false;
-                                    System.out.println("Tu vida: " + vida);
-                                    System.out.println("La vida del enemigo es de " + vidaEnemigo);
-                                    System.out.println("");
-                                    System.out.println("1. atacar");
-                                    System.out.println("2. Curarse");
-                                    System.out.println("3. Inventario");
-                                    System.out.println("4. Abandonar");
+                                    mostrarMenuCombate(vida, vidaEnemigo);
                                     int accion = teclado.nextInt();
                                     
                                     switch (accion)
