@@ -87,7 +87,7 @@ public static void main(String[] args)
                     System.out.println("2. Consultar Ranking");
                     System.out.println("3. Ayuda");
                     System.out.println("4. Salir del Juego");
-                    System.out.println( "Elije una Opcion para Continuar:");
+                    System.out.println( "Elije una opción para Continuar:");
             }
             public static void mostrarRanking(String[] nombres, String[] heroe, int[] puntos, int contador)
             {
@@ -295,6 +295,8 @@ public static void main(String[] args)
             }
                 public static void mostrarInventario(int[] inventario, int pocionesDisponibles)
             {
+                System.out.println("");
+                System.out.println("==================");
                 System.out.println("Tienes " + pocionesDisponibles + " pociones");
                 for (int i = 0; i < pocionesDisponibles; i++)
                 {
@@ -312,28 +314,30 @@ public static void main(String[] args)
                 }
                 return vidaNueva;
             }
+            public static int ataqueHeroe(int vidaEnemigo)
+            {
+            int danio = (int) (Math.random() * 11) + 10;
+            System.out.println("");
+            System.out.println("Has atacado al enemigo y le has hecho " + danio + " puntos de daño.");
+            System.out.println("");
+            return vidaEnemigo - danio;
+            }
 
             public static int turnoEnemigo(String enemigo, int vida)
             {
                 int danioEnemigo = (int) (Math.random() * 11) + 5;
                 System.out.println("El " + enemigo + " te ha atacado y te ha hecho " + danioEnemigo + " puntos de daño.");
-                System.out.println("");
                 return vida - danioEnemigo;
-            }
-
-            public static int ataqueHeroe(int vidaEnemigo)
-            {
-                int danio = (int) (Math.random() * 11) + 10;
-                System.out.println("Has atacado al enemigo y le has hecho " + danio + " puntos de daño.");
-                System.out.println("");
-                return vidaEnemigo - danio;
             }
 
             public static void mostrarMenuCombate(int vida, int vidaEnemigo)
             {
+                System.out.println("==================");
                 System.out.println("Tu vida: " + vida);
                 System.out.println("La vida del enemigo es de " + vidaEnemigo);
+                System.out.println("==================");
                 System.out.println("");
+                System.out.println("¿Que harás ahora?");
                 System.out.println("1. atacar");
                 System.out.println("2. Curarse");
                 System.out.println("3. Inventario");
@@ -360,9 +364,9 @@ public static void main(String[] args)
                         String jugador = pedirTexto(teclado, "Dime tu nombre jugador", "Es necesario un nombre");
                         String heroe = pedirTexto(teclado, "Introduce el nombre de tu Héroe", "El nombre no puede estar vacio");
                         
+                        System.out.println("");
                         System.out.println("¡Bienvenido, " + jugador + "!");
                         System.out.println("Tu héroe " + heroe + " está listo para defender las Almas");
-                        System.out.println("");
             
                         int[] inventario = new int [POCIONES_INICIALES];
                         for (int i = 0; i < inventario.length; i++)
@@ -375,12 +379,21 @@ public static void main(String[] args)
                         String[] nombresEnemigos = {"Goblin", "Orco", "Vesperos"};
                         int[] vidaEnemigos = {40, 60, 80};
                         boolean abandonar = false;
+                        Villano[] villanos = {new Goblin(), new Orco(), new Vesperos()};
 
                         for (int i = 0; i < nombresEnemigos.length; i++)
                             {
                                 String enemigo = nombresEnemigos[i];
                                 int vidaEnemigo = vidaEnemigos[i];
+                                System.out.println("");
+                                System.out.println("¡Ten cuidado! " + heroe);
                                 System.out.println("Ha aparecido " + enemigo + " con " + vidaEnemigo + " puntos de vida.");
+                                System.out.println("");
+                                Villano villanoActual = villanos[i];
+                                villanoActual.correr();
+                                villanoActual.saltar();
+                                villanoActual.usarPoder();
+
 
                                 while (estado[0] > 0 && vidaEnemigo > 0 && !abandonar)     
                                 {

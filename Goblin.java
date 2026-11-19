@@ -8,7 +8,7 @@ public class Goblin extends Villano
     @Override
     public void usarPoder()
     {
-        System.out.println(getNombre() + "corre hacia ti para cortarte con su daga");
+        System.out.println("El " + getNombre() + " logra hacerte un corte con su daga");
     }
 }
 
