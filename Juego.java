@@ -116,7 +116,7 @@ public static void main(String[] args)
                 {
                     inventario[pocionesDisponibles - 1] = 0;
                     int vidaNueva = vida + CURACION_POCION;
-                    if (vidaNueva > VIDA_MAXIMA);   
+                    if (vidaNueva > VIDA_MAXIMA)   
                     {
                         vidaNueva = VIDA_MAXIMA;
                     }
