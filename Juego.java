@@ -313,6 +313,14 @@ public static void main(String[] args)
                 return vidaNueva;
             }
 
+            public static int turnoEnemigo(String enemigo, int vida)
+            {
+                int danioEnemigo = (int) (Math.random() * 11) + 5;
+                System.out.println("El " + enemigo + " te ha atacado y te ha hecho " + danioEnemigo + " puntos de daño.");
+                System.out.println("");
+                return vida - danioEnemigo;
+            }
+
             public static int ataqueHeroe(int vidaEnemigo)
             {
                 int danio = (int) (Math.random() * 11) + 10;
@@ -407,10 +415,7 @@ public static void main(String[] args)
                                 
                                     if (turnoConsumido && vidaEnemigo > 0)
                                     {
-                                        int danioEnemigo = (int) (Math.random() * 11) + 5;
-                                        vida = vida - danioEnemigo;
-                                        System.out.println("El " + enemigo + " te ha atacado y te ha hecho " + danioEnemigo + " puntos de daño.");
-                                        System.out.println("");
+                                        vida = turnoEnemigo(enemigo, vida);
                                     }   
                                 }   
                                     if (abandonar)
