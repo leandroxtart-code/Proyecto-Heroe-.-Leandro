@@ -302,84 +302,110 @@ public static void main(String[] args)
                 }
             }
             
+            public static int curarse(int vida, int[] inventario, int pocionesDisponibles)
+            {
+                System.out.println("");
+                int vidaNueva = usarPocion(vida, inventario, pocionesDisponibles);
+                if (vidaNueva > vida)
+                {
+                    System.out.println("Has recuperado " + (vidaNueva - vida) + " de vida");
+                }
+                return vidaNueva;
+            }
+
+            public static int turnoEnemigo(String enemigo, int vida)
+            {
+                int danioEnemigo = (int) (Math.random() * 11) + 5;
+                System.out.println("El " + enemigo + " te ha atacado y te ha hecho " + danioEnemigo + " puntos de daño.");
+                System.out.println("");
+                return vida - danioEnemigo;
+            }
+
+            public static int ataqueHeroe(int vidaEnemigo)
+            {
+                int danio = (int) (Math.random() * 11) + 10;
+                System.out.println("Has atacado al enemigo y le has hecho " + danio + " puntos de daño.");
+                System.out.println("");
+                return vidaEnemigo - danio;
+            }
+
+            public static void mostrarMenuCombate(int vida, int vidaEnemigo)
+            {
+                System.out.println("Tu vida: " + vida);
+                System.out.println("La vida del enemigo es de " + vidaEnemigo);
+                System.out.println("");
+                System.out.println("1. atacar");
+                System.out.println("2. Curarse");
+                System.out.println("3. Inventario");
+                System.out.println("4. Abandonar");
+            }
+
+            public static String pedirTexto(Scanner teclado, String pregunta, String error)
+            {
+                System.out.println(pregunta);
+                String texto = teclado.nextLine();
+                while(texto.isBlank())
+                {
+                    System.out.println(error);
+                    System.out.println(pregunta);
+                    texto = teclado.nextLine();
+                }
+                return texto;
+            }
+            
             public static void nuevaPartida(Scanner teclado)
             {
                     System.out.println("Nueva Partida");
-                        System.out.println("Dime tu nombre Jugador");
                         teclado.nextLine();
-                        String jugador = teclado.nextLine();
-                        while (jugador.isBlank())
-                        {
-                            System.out.println("Es necesario un nombre");
-                            System.out.println("Dime tu nombre Jugador");
-                            jugador = teclado.nextLine();
-                        }
-                        System.out.println("Introduce el nombre de tu Héroe:"); 
-                        String nombre = teclado.nextLine();
-
-                        while (nombre.isBlank())
-                        {
-                            System.out.println("El nombre no puede estar vacio");
-                            System.out.println("Introduce el nombre de tu Héroe");
-                            nombre = teclado.nextLine();
-                        }
+                        String jugador = pedirTexto(teclado, "Dime tu nombre jugador", "Es necesario un nombre");
+                        String heroe = pedirTexto(teclado, "Introduce el nombre de tu Héroe", "El nombre no puede estar vacio");
+                        
                         System.out.println("¡Bienvenido, " + jugador + "!");
-                        System.out.println("Tu héroe " + nombre + " está listo para defender las Almas");
+                        System.out.println("Tu héroe " + heroe + " está listo para defender las Almas");
                         System.out.println("");
-                        int vida = VIDA_MAXIMA;
+            
                         int[] inventario = new int [POCIONES_INICIALES];
-
                         for (int i = 0; i < inventario.length; i++)
                         {
                             inventario[i] = CURACION_POCION;
                         }
-                        int pocionesDisponibles = inventario.length;
+                        int[] estado = {VIDA_MAXIMA, inventario.length};
+
                         int puntos = 0;
                         String[] nombresEnemigos = {"Goblin", "Orco", "Vesperos"};
                         int[] vidaEnemigos = {40, 60, 80};
                         boolean abandonar = false;
+
                         for (int i = 0; i < nombresEnemigos.length; i++)
                             {
                                 String enemigo = nombresEnemigos[i];
                                 int vidaEnemigo = vidaEnemigos[i];
                                 System.out.println("Ha aparecido " + enemigo + " con " + vidaEnemigo + " puntos de vida.");
 
-                                while (vida > 0 && vidaEnemigo > 0 && !abandonar)
-                                    
+                                while (estado[0] > 0 && vidaEnemigo > 0 && !abandonar)     
                                 {
                                     boolean turnoConsumido = false;
-                                    System.out.println("Tu vida: " + vida);
-                                    System.out.println("La vida del enemigo es de " + vidaEnemigo);
-                                    System.out.println("");
-                                    System.out.println("1. atacar");
-                                    System.out.println("2. Curarse");
-                                    System.out.println("3. Inventario");
-                                    System.out.println("4. Abandonar");
+                                    mostrarMenuCombate(estado[0], vidaEnemigo);
                                     int accion = teclado.nextInt();
                                     
+
                                     switch (accion)
                                     {
                                          case 1:
-                                        int danio = (int) (Math.random() * 11) + 10;
-                                        vidaEnemigo = vidaEnemigo - danio;
-                                        System.out.println("Has atacado al enemigo y le has hecho " + danio + " puntos de daño.");
-                                        System.out.println("");
+                                        vidaEnemigo = ataqueHeroe(vidaEnemigo);
                                         turnoConsumido = true;
                                         break;
                                          case 2:
-                                            System.out.println("");
-                                            int vidaJugador = vida;
-                                            vida = usarPocion(vida, inventario, pocionesDisponibles);
-                                            
-                                            if (vida > vidaJugador) 
+                                            int vidaAntes = estado[0];
+                                            estado[0] = curarse(estado[0], inventario, estado[1]);
+                                            if (estado[0] > vidaAntes) 
                                             {
-                                                System.out.println("Has recuperado " + (vida - vidaJugador) + " de vida");
-                                                pocionesDisponibles--;
+                                                estado[1]--;
                                                 turnoConsumido = true;
                                             }
-                                            break;
+                                        break;
                                          case 3: 
-                                        mostrarInventario(inventario, pocionesDisponibles);
+                                        mostrarInventario(inventario, estado[1]);
                                          break;
                                          case 4: 
                                         System.out.println("Has abandonado, pero no te preocupes que lo venceras en otra ocasion");
@@ -391,10 +417,7 @@ public static void main(String[] args)
                                 
                                     if (turnoConsumido && vidaEnemigo > 0)
                                     {
-                                        int danioEnemigo = (int) (Math.random() * 11) + 5;
-                                        vida = vida - danioEnemigo;
-                                        System.out.println("El " + enemigo + " te ha atacado y te ha hecho " + danioEnemigo + " puntos de daño.");
-                                        System.out.println("");
+                                        estado[0] = turnoEnemigo(enemigo, estado[0]);
                                     }   
                                 }   
                                     if (abandonar)
@@ -402,7 +425,7 @@ public static void main(String[] args)
                                         System.out.println("Preparate mejor para otra oportunidad!!");
                                         break;
                                     }
-                                    else if (vida <= 0)
+                                    else if (estado[0] <= 0)
                                     {
                                         System.out.println("Has sido derrotado por " + enemigo + ". ¡Buen Intento!");
                                         System.out.println("");
@@ -417,14 +440,14 @@ public static void main(String[] args)
                                     }
                             }
                             
-                        if (!abandonar && vida > 0)
+                        if (!abandonar && estado[0] > 0)
                         {
-                            puntos = puntos + vida;
-                            System.out.println("¡Has completado el juego! Bonificación de vida restante: " + vida + " puntos");
+                            puntos = puntos + estado[0];
+                            System.out.println("¡Has completado el juego! Bonificación de vida restante: " + estado[0] + " puntos");
                         }
 
                         System.out.println("Puntuación total conseguida: " + puntos + " puntos");
-                        guardarRanking(jugador, nombre, puntos);
+                        guardarRanking(jugador, heroe, puntos);
                             
             }
 }
