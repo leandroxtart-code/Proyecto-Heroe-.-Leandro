@@ -8,6 +8,6 @@ public class Vesperos extends Villano
     @Override
     public void usarPoder()
     {
-        System.out.println(getNombre() + " prepara las almas poseidas contra ti");
+        System.out.println(getNombre() + " prepara las almas poseidas y las lanza contra ti");
     }
 }

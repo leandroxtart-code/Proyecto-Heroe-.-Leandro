@@ -19,16 +19,16 @@ public class Villano
 
     public void correr()
     {
-        System.out.println(nombre + " corre hacia ti para golpearte");
+        System.out.println("El " + nombre + " corre hacia ti para atacarte");
     }
     
     public void saltar()
     {
-        System.out.println(nombre + " da un salto agil");
+        System.out.println("El " + nombre + " da un salto ágil");
     }
 
     public void usarPoder()
     {
-        System.out.println(nombre + " prepara su poder");
+        System.out.println("El " + nombre + " prepara su poder para usarlo contra ti");
     }
 }

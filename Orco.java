@@ -8,6 +8,6 @@ public class Orco extends Villano
     @Override
     public void usarPoder()
     {
-        System.out.println(getNombre() + " te lanzara rocas y objetos punzantes");
+        System.out.println("Este " + getNombre() + " te lanzará rocas u objetos punzantes y pesados");
     }
 }
