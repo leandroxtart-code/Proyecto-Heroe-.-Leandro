@@ -302,29 +302,26 @@ public static void main(String[] args)
                 }
             }
             
+            public static String pedirTexto(Scanner teclado, String pregunta, String error)
+            {
+                System.out.println(pregunta);
+                String texto = teclado.nextLine();
+                while(texto.isBlank())
+                {
+                    System.out.println(error);
+                    System.out.println(pregunta);
+                    texto = teclado.nextLine();
+                }
+                return texto;
+            }
             public static void nuevaPartida(Scanner teclado)
             {
                     System.out.println("Nueva Partida");
-                        System.out.println("Dime tu nombre Jugador");
                         teclado.nextLine();
-                        String jugador = teclado.nextLine();
-                        while (jugador.isBlank())
-                        {
-                            System.out.println("Es necesario un nombre");
-                            System.out.println("Dime tu nombre Jugador");
-                            jugador = teclado.nextLine();
-                        }
-                        System.out.println("Introduce el nombre de tu Héroe:"); 
-                        String nombre = teclado.nextLine();
-
-                        while (nombre.isBlank())
-                        {
-                            System.out.println("El nombre no puede estar vacio");
-                            System.out.println("Introduce el nombre de tu Héroe");
-                            nombre = teclado.nextLine();
-                        }
+                        String jugador = pedirTexto(teclado, "Dime tu nombre jugador", "Es necesario un nombre");
+                        String heroe = pedirTexto(teclado, "Introduce el nombre de tu Héroe", "El nombre no puede estar vacio");
                         System.out.println("¡Bienvenido, " + jugador + "!");
-                        System.out.println("Tu héroe " + nombre + " está listo para defender las Almas");
+                        System.out.println("Tu héroe " + heroe + " está listo para defender las Almas");
                         System.out.println("");
                         int vida = VIDA_MAXIMA;
                         int[] inventario = new int [POCIONES_INICIALES];
@@ -424,7 +421,7 @@ public static void main(String[] args)
                         }
 
                         System.out.println("Puntuación total conseguida: " + puntos + " puntos");
-                        guardarRanking(jugador, nombre, puntos);
+                        guardarRanking(jugador, heroe, puntos);
                             
             }
 }
