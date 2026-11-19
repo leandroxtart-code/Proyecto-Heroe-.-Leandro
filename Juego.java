@@ -302,6 +302,17 @@ public static void main(String[] args)
                 }
             }
             
+            public static int curarse(int vida, int[] inventario, int pocionesDisponibles)
+            {
+                System.out.println("");
+                int vidaNueva = usarPocion(vida, inventario, pocionesDisponibles);
+                if (vidaNueva > vida);
+                {
+                    System.out.println("Has recuperado " + (vidaNueva - vida) + " de vida");
+                }
+                return vidaNueva;
+            }
+
             public static int ataqueHeroe(int vidaEnemigo)
             {
                 int danio = (int) (Math.random() * 11) + 10;
@@ -375,13 +386,10 @@ public static void main(String[] args)
                                         turnoConsumido = true;
                                         break;
                                          case 2:
-                                            System.out.println("");
-                                            int vidaJugador = vida;
-                                            vida = usarPocion(vida, inventario, pocionesDisponibles);
-                                            
-                                            if (vida > vidaJugador) 
+                                            int vidaAntes = vida;
+                                            vida = curarse(vida, inventario, pocionesDisponibles);
+                                            if (vida > vidaAntes) 
                                             {
-                                                System.out.println("Has recuperado " + (vida - vidaJugador) + " de vida");
                                                 pocionesDisponibles--;
                                                 turnoConsumido = true;
                                             }
