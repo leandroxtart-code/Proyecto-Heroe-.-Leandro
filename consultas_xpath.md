@@ -13,7 +13,7 @@ Estructura del XML: `ranking` > `partida` > `nombre`, `heroe`, `puntos`.
 - **Expresión:** `/ranking/partida/heroe/text()`
 - **Archivo de prueba:** `ranking_prueba.xml`
 - **Resultado esperado:** 10 héroes: Vengador, Panchi, Pruebas, Pruebas2, Pierdo, Abandonar, Pruebas7, Prueba8, Prueba9, Prueba19
-- **Resultado obtenido:** [rellena tras ejecutarla]
+- **Resultado obtenido:** 10 héroes: Vengador, Panchi, Pruebas, Pruebas2, Pierdo, Abandonar, Pruebas7, Prueba8, Prueba9, Prueba19.
 
 ## Consulta 2. Filtro por puntuación
 
@@ -21,7 +21,7 @@ Estructura del XML: `ranking` > `partida` > `nombre`, `heroe`, `puntos`.
 - **Expresión:** `/ranking/partida[number(puntos) > 300]`
 - **Archivo de prueba:** `ranking_prueba.xml`
 - **Resultado esperado:** 5 partidas: Panchi (344), Pruebas (315), Pruebas2 (331), Prueba8 (324) y Prueba19 (341). Carlos no aparece porque tiene 300 y no es mayor que 300
-- **Resultado obtenido:** [rellena tras ejecutarla]
+- **Resultado obtenido:** 5 partidas: Panchi (344), Pruebas (315), Pruebas2 (331), Prueba8 (324) y Prueba19 (341).
 
 ## Consulta 3. Filtro por jugador
 
@@ -29,7 +29,7 @@ Estructura del XML: `ranking` > `partida` > `nombre`, `heroe`, `puntos`.
 - **Expresión:** `/ranking/partida[normalize-space(nombre) = 'Carlos']/heroe/text()`
 - **Archivo de prueba:** `ranking_prueba.xml`
 - **Resultado esperado:** Vengador
-- **Resultado obtenido:** [rellena tras ejecutarla]
+- **Resultado obtenido:** Vengador.
 
 ## Consulta 4. Combinación de condiciones en un predicado
 
@@ -37,7 +37,7 @@ Estructura del XML: `ranking` > `partida` > `nombre`, `heroe`, `puntos`.
 - **Expresión:** `/ranking/partida[normalize-space(nombre) = 'Lean' and number(puntos) >= 200 and number(puntos) <= 315]/heroe/text()`
 - **Archivo de prueba:** `ranking_prueba.xml`
 - **Resultado esperado:** Pruebas, Pierdo, Abandonar, Pruebas7 y Prueba9. El rango deja fuera a Panchi, Pruebas2, Prueba8 y Prueba19, y el nombre deja fuera a Carlos (300 puntos)
-- **Resultado obtenido:** [rellena tras ejecutarla]
+- **Resultado obtenido:** Pruebas, Pierdo, Abandonar, Pruebas7 y Prueba9.
 
 ## Consulta 5. Recuento
 
@@ -45,4 +45,4 @@ Estructura del XML: `ranking` > `partida` > `nombre`, `heroe`, `puntos`.
 - **Expresión:** `count(/ranking/partida[number(puntos) > 300])`
 - **Archivo de prueba:** `ranking_prueba.xml`
 - **Resultado esperado:** 5
-- **Resultado obtenido:** [rellena tras ejecutarla]
+- **Resultado obtenido:** 5.
