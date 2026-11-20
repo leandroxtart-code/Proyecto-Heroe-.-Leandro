@@ -492,7 +492,13 @@ public static void main(String[] args)
                                         System.out.println("Has conseguido " + 100 + " puntos");
                                     }
                             }
-                            
+                        if (!abandonar && estado[0] > 0 && puntos == nombresEnemigos.length * 100)
+                        {
+                            puntos = puntos + estado[0];
+                            System.out.println("¡Bonificación por vida restante: " + estado[0] + " puntos!");
+                            System.out.println("Puntuación final: " + puntos);
+                        }    
+                        
                         if (insertarEnRanking(nombresRanking, heroesRanking, puntosRanking, contadorRanking, jugador, heroe, puntos))
                         {
                             guardarRanking(nombresRanking, heroesRanking, puntosRanking, contadorRanking[0]);
