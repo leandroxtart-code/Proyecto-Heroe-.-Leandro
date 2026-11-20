@@ -58,8 +58,7 @@ public static void main(String[] args)
             switch (menu)
             {
                 case 1:
-                    nuevaPartida(teclado);
-                    cargarRanking(nombresRanking, heroesRanking, puntosRanking, contadorRanking);
+                    nuevaPartida(teclado, nombresRanking, heroesRanking, puntosRanking, contadorRanking);
                     break;
                 case 2:
                     mostrarRanking(nombresRanking, heroesRanking, puntosRanking, contadorRanking[0]);
@@ -216,57 +215,98 @@ public static void main(String[] args)
                 }    
             }
             
-            public static void guardarRanking(String jugador, String heroe, int puntos) 
+            public static boolean insertarEnRanking(String[] nombres, String[] heroes, int[] puntos, int[] contador, String jugador, String heroe, int nuevosPuntos)
+            {
+                int capacidad = puntos.length;
+
+                if (contador[0] == capacidad && nuevosPuntos <= puntos[capacidad - 1])
+                {
+                    return false;
+                }
+
+                int posicion = 0;
+                while (posicion < contador[0] && puntos[posicion] >= nuevosPuntos)
+                {
+                    posicion++;
+                }
+
+                int ultimo = Math.min(contador[0], capacidad - 1);
+                for (int i = ultimo; i > posicion; i--)
+                {
+                    nombres[i] = nombres[i - 1];
+                    heroes[i] = heroes[i - 1];
+                    puntos[i] = puntos[i - 1];
+                }
+
+                nombres[posicion] = jugador;
+                heroes[posicion] = heroe;
+                puntos[posicion] = nuevosPuntos;
+
+                if (contador[0] < capacidad)
+                {
+                    contador[0]++;
+                }
+                return true;
+            }
+
+            public static void guardarRanking(String[] nombres, String[] heroes, int[] puntos, int contador)
             {
                 try
                 {
-                    File archivo = new File("ranking.xml");
                     DocumentBuilderFactory fabrica = DocumentBuilderFactory.newInstance();
-                    fabrica.setFeature("http://apache.org/xml/features/disallow-doctype-decl", false);
                     DocumentBuilder constructor = fabrica.newDocumentBuilder();
-                    Document documento;
 
-                    if(archivo.exists())
+                    File archivo = new File("ranking.xml");
+                    if (archivo.exists())
                     {
-                        documento = constructor.parse(archivo);
+                        try
+                        {
+                            constructor.parse(archivo);
+                        }
+                        catch (Exception e)
+                        {
+                            System.out.println("Aviso: ranking.xml no se puede leer, no se sobrescribe. Corrígelo y vuelve a jugar.");
+                            return;
+                        }
                     }
-                    else
+
+                    Document documento = constructor.newDocument();
+
+                    Element raiz = documento.createElement("ranking");
+                    documento.appendChild(raiz);
+
+                    for (int i = 0; i < contador; i++)
                     {
-                        documento = constructor.newDocument();
-                        Element raiz = documento.createElement("ranking");
-                        documento.appendChild(raiz);
+                        Element partida = documento.createElement("partida");
+
+                        Element nodoNombre = documento.createElement("nombre");
+                        nodoNombre.setTextContent(nombres[i]);
+                        partida.appendChild(nodoNombre);
+
+                        Element nodoHeroe = documento.createElement("heroe");
+                        nodoHeroe.setTextContent(heroes[i]);
+                        partida.appendChild(nodoHeroe);
+
+                        Element nodoPuntos = documento.createElement("puntos");
+                        nodoPuntos.setTextContent(String.valueOf(puntos[i]));
+                        partida.appendChild(nodoPuntos);
+
+                        raiz.appendChild(partida);
                     }
-                    Element raiz = documento.getDocumentElement();
 
-                    Element nuevaPartida = documento.createElement("partida");
-
-                    Element nodoJugador = documento.createElement("nombre");
-                    nodoJugador.setTextContent(jugador);
-                    nuevaPartida.appendChild(nodoJugador);
-                    
-                    Element nodoHeroe = documento.createElement("heroe");
-                    nodoHeroe.setTextContent(heroe);
-                    nuevaPartida.appendChild(nodoHeroe);
-
-                    Element nodoPuntos = documento.createElement("puntos");
-                    nodoPuntos.setTextContent(String.valueOf(puntos));
-                    nuevaPartida.appendChild(nodoPuntos);
-
-                    raiz.appendChild(nuevaPartida);
-
-                    javax.xml.transform.TransformerFactory transformerFactory = javax.xml.transform.TransformerFactory.newInstance();
-                    javax.xml.transform.Transformer transformer = transformerFactory.newTransformer();
+                    javax.xml.transform.Transformer transformer = javax.xml.transform.TransformerFactory.newInstance().newTransformer();
                     transformer.setOutputProperty(javax.xml.transform.OutputKeys.INDENT, "yes");
-                    javax.xml.transform.dom.DOMSource source = new javax.xml.transform.dom.DOMSource(documento);
-                    javax.xml.transform.stream.StreamResult result = new javax.xml.transform.stream.StreamResult(archivo);
-                    transformer.transform(source, result);
+                    transformer.setOutputProperty(javax.xml.transform.OutputKeys.DOCTYPE_SYSTEM, "ranking.dtd");
+                    javax.xml.transform.dom.DOMSource origen = new javax.xml.transform.dom.DOMSource(documento);
+                    javax.xml.transform.stream.StreamResult destino = new javax.xml.transform.stream.StreamResult(archivo);
+                    transformer.transform(origen, destino);
 
-                    System.out.println("¡Partida Guardada en el ranking correctamente!");
+                    System.out.println("¡Ranking guardado correctamente!");
                 }
-                    catch (Exception e)
-                    {
-                        System.out.println("Error al guardar el ranking" + e.getMessage());
-                    }
+                catch (Exception e)
+                {
+                    System.out.println("Error al guardar el ranking: " + e.getMessage());
+                }
             }
 
             public static int usarPocion(int vida, int[] inventario, int pocionesDisponibles)
@@ -357,7 +397,7 @@ public static void main(String[] args)
                 return texto;
             }
             
-            public static void nuevaPartida(Scanner teclado)
+            public static void nuevaPartida(Scanner teclado, String[] nombresRanking, String[] heroesRanking, int[] puntosRanking, int[] contadorRanking)
             {
                     System.out.println("Nueva Partida");
                         teclado.nextLine();
@@ -453,15 +493,14 @@ public static void main(String[] args)
                                     }
                             }
                             
-                        if (!abandonar && estado[0] > 0)
+                        if (insertarEnRanking(nombresRanking, heroesRanking, puntosRanking, contadorRanking, jugador, heroe, puntos))
                         {
-                            puntos = puntos + estado[0];
-                            System.out.println("¡Has completado el juego! Bonificación de vida restante: " + estado[0] + " puntos");
+                            guardarRanking(nombresRanking, heroesRanking, puntosRanking, contadorRanking[0]);
                         }
-
-                        System.out.println("Puntuación total conseguida: " + puntos + " puntos");
-                        guardarRanking(jugador, heroe, puntos);
-                            
+                        else
+                        {
+                            System.out.println("Tu puntuacion no entra en el Ranking");
+                        }                          
             }
 }
             
