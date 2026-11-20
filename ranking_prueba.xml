@@ -1,0 +1,424 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE ranking SYSTEM "ranking.dtd">
+<ranking>
+                                                    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <partida>
+                                                                                                     
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <nombre>Carlos</nombre>
+                                                                                                        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <heroe>Vengador</heroe>
+                                                                                                        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <puntos>300</puntos>
+                                                                                                    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    </partida>
+                                                
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <partida>
+                                                                                                
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <nombre>Lean</nombre>
+                                                                                                
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <heroe>Panchi</heroe>
+                                                                                                
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <puntos>344</puntos>
+                                                                                            
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    </partida>
+                                            
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <partida>
+                                                                                        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <nombre>Lean</nombre>
+                                                                                        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <heroe>Pruebas </heroe>
+                                                                                        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <puntos>315</puntos>
+                                                                                    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    </partida>
+                                        
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <partida>
+                                                                                
+        
+        
+        
+        
+        
+        
+        
+        
+        <nombre>Lean</nombre>
+                                                                                
+        
+        
+        
+        
+        
+        
+        
+        
+        <heroe>Pruebas2</heroe>
+                                                                                
+        
+        
+        
+        
+        
+        
+        
+        
+        <puntos>331</puntos>
+                                                                            
+    
+    
+    
+    
+    
+    
+    
+    
+    </partida>
+                                    
+    
+    
+    
+    
+    
+    
+    
+    
+    <partida>
+                                                                        
+        
+        
+        
+        
+        
+        
+        
+        <nombre>Lean</nombre>
+                                                                        
+        
+        
+        
+        
+        
+        
+        
+        <heroe>Pierdo</heroe>
+                                                                        
+        
+        
+        
+        
+        
+        
+        
+        <puntos>200</puntos>
+                                                                    
+    
+    
+    
+    
+    
+    
+    
+    </partida>
+                                
+    
+    
+    
+    
+    
+    
+    
+    <partida>
+                                                                
+        
+        
+        
+        
+        
+        
+        <nombre>Lean</nombre>
+                                                                
+        
+        
+        
+        
+        
+        
+        <heroe>Abandonar</heroe>
+                                                                
+        
+        
+        
+        
+        
+        
+        <puntos>200</puntos>
+                                                            
+    
+    
+    
+    
+    
+    
+    </partida>
+                            
+    
+    
+    
+    
+    
+    
+    <partida>
+                                                        
+        
+        
+        
+        
+        
+        <nombre>Lean</nombre>
+                                                        
+        
+        
+        
+        
+        
+        <heroe>Pruebas7</heroe>
+                                                        
+        
+        
+        
+        
+        
+        <puntos>200</puntos>
+                                                    
+    
+    
+    
+    
+    
+    </partida>
+                        
+    
+    
+    
+    
+    
+    <partida>
+                                                
+        
+        
+        
+        
+        <nombre>Lean</nombre>
+                                                
+        
+        
+        
+        
+        <heroe>Prueba8</heroe>
+                                                
+        
+        
+        
+        
+        <puntos>324</puntos>
+                                            
+    
+    
+    
+    
+    </partida>
+                    
+    
+    
+    
+    
+    <partida>
+                                        
+        
+        
+        
+        <nombre>Lean</nombre>
+                                        
+        
+        
+        
+        <heroe>Prueba9</heroe>
+                                        
+        
+        
+        
+        <puntos>200</puntos>
+                                    
+    
+    
+    
+    </partida>
+
+    <partida>
+        <nombre>Lean</nombre>
+        <heroe>Prueba19</heroe>
+        <puntos>341</puntos>
+    </partida>
+</ranking>
