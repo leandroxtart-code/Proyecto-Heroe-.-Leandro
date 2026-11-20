@@ -1,5 +1,5 @@
 <!ELEMENT ranking (partida*)>
-<!ELEMENT partida (nombre, puntos, heroe)>
+<!ELEMENT partida (nombre, heroe, puntos)>
 <!ELEMENT nombre (#PCDATA)>
 <!ELEMENT heroe (#PCDATA)>
 <!ELEMENT puntos (#PCDATA)>

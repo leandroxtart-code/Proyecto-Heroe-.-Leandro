@@ -118,7 +118,6 @@ public static void main(String[] args)
                     System.out.println("· Los enemigos te haran entre 5 y 15 puntos de daño");
                     System.out.println("· Debes derrotar a todos los enemigos para liberar las almas");
                     System.out.println("· Consigues 100 puntos por cada enemigo derrotado");
-                    System.out.println("· Al derrotar a tu enemigo recibiras una maximo de 3 pociones y de nuevo 100 de vida");
                     System.out.println("");
             }
             
